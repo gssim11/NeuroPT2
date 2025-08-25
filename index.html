@@ -445,7 +445,7 @@
                             </p>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg text-blue-700">  근육은 '쉴 때' 성장</h3>
+                            <h3 class="font-bold text-lg text-blue-700">🛌 근육은 '쉴 때' 성장</h3>
                             <p class="mt-1 text-slate-600">
                                 운동으로 손상된 근육은 48시간 이상 쉴 때 회복하고 강해집니다. 상체/하체 등 부위를 나누는 '분할 훈련'으로 충분한 휴식을 주세요.
                             </p>
@@ -1524,7 +1524,8 @@
 
             // --- Text Generation API Call for Modal ---
             async function callTextApi(prompt, buttonToDisable) {
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`;
+                // ***** PERFORMANCE FIX: Reverted to the previous model *****
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent`;
                 const payload = { contents: [{ role: "user", parts: [{ text: prompt }] }] };
                 const result = await callApiForModal(apiUrl, payload, buttonToDisable);
 
@@ -1590,14 +1591,15 @@
                     document.getElementById('ai-support').scrollIntoView({ behavior: 'smooth' });
                     throw new Error('API key is not set.');
                 }
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent`;
+                // ***** PERFORMANCE FIX: Reverted to the specific TTS model *****
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent`;
                 const payload = {
                     contents: [{ parts: [{ text: prompt }] }],
                     generationConfig: {
                         responseModalities: ["AUDIO"],
                         speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
                     },
-                    model: "models/gemini-1.5-flash-latest" // This might need adjustment based on available TTS models
+                    model: "gemini-2.5-flash-preview-tts"
                 };
 
                 try {
@@ -1729,4 +1731,3 @@
     </script>
 </body>
 </html>
- 
